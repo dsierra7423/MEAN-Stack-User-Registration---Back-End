@@ -11,7 +11,6 @@ var app = express();
 
 // middleware
 app.use(bodyParser.json());
-app.use(cors());
 
 app.use(cors({
     origin: 'https://arsmarty.com/'
