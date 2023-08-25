@@ -3,7 +3,7 @@ require('./models/db');
 
 const express = require('express');
 const bodyParser = require('body-parser');
-//const cors = require('cors');
+const cors = require('cors');
 
 const rtsIndex = require('./routes/index.router');
 
@@ -12,9 +12,9 @@ var app = express();
 // middleware
 app.use(bodyParser.json());
 
-//app.use(cors({
-//    origin: 'https://arsmarty.com/'
-//}));
+app.use(cors({
+    origin: 'https://arsmarty.com/'
+}));
 
 app.use('/api', rtsIndex);
 
