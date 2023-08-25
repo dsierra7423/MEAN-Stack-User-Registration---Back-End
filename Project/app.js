@@ -13,7 +13,7 @@ var app = express();
 app.use(bodyParser.json());
 
 app.use(cors({
-    origin: 'https://arsmarty.com/'
+    origin: '*'
 }));
 
 app.use('/api', rtsIndex);
