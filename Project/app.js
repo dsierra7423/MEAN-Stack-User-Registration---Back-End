@@ -1,11 +1,31 @@
-const express = require('express')
-const app = express()
-const port = 3000
+require('./config/config');
+require('./models/db');
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+const rtsIndex = require('./routes/index.router');
+
+var app = express();
+
+// middleware
+app.use(bodyParser.json());
+
+app.use(cors({
+    origin: '*'
+}));
+
+app.use('/api', rtsIndex);
+
+// error handler
+app.use((err, req, res, next) => {
+    if (err.name === 'ValidationError') {
+        var valErrors = [];
+        Object.keys(err.errors).forEach(key => valErrors.push(err.errors[key].message));
+        res.status(422).send(valErrors)
+    }
+});
+
+// start server
+app.listen(process.env.PORT, () => console.log(`Server started at port : ${process.env.PORT}`));
